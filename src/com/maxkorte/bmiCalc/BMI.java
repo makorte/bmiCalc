@@ -1,14 +1,57 @@
 package com.maxkorte.bmiCalc;
 
-public class BMI {
-    public static double calculate(int weight, int height){
-        if(weight < 1 || height < 1) throw new IllegalArgumentException("Das Gewicht oder die Größe dürfen nicht " +
-                "kleiner als 1 sein!");
+import javafx.beans.property.DoubleProperty;
 
-        return (weight / Math.pow(((double) height / 100), 2));
+public class BMI {
+
+    DoubleProperty weight;
+    DoubleProperty height;
+    DoubleProperty bmi;
+
+    public BMI() {
     }
 
-    public static BMIClass categorize(double bmi){
+    public double getWeight() {
+        return weight.get();
+    }
+
+    public DoubleProperty weightProperty() {
+        return weight;
+    }
+
+    public void setWeight(double weight) {
+        this.weight.set(weight);
+    }
+
+    public double getHeight() {
+        return height.get();
+    }
+
+    public DoubleProperty heightProperty() {
+        return height;
+    }
+
+    public void setHeight(double height) {
+        this.height.set(height);
+    }
+
+    public double getBmi() {
+        return bmi.get();
+    }
+
+    public DoubleProperty bmiProperty() {
+        return bmi;
+    }
+
+    public void setBmi(double bmi) {
+        this.bmi.set(bmi);
+    }
+
+    public void calculate(){
+        setBmi(getWeight() / Math.pow((getHeight() / 100), 2));
+    }
+
+    public BMIClass categorize(double bmi){
         if(bmi > 0 && bmi < 18.5) return BMIClass.UNTERGEWICHT;
         if(bmi >= 18.5 && bmi < 25) return BMIClass.NORMALGEWICHT;
         if(bmi >= 25 && bmi < 30) return BMIClass.UEBERGEWICHT;
