@@ -1,12 +1,13 @@
 package com.maxkorte.bmiCalc;
 
 import javafx.beans.property.DoubleProperty;
+import javafx.beans.property.SimpleDoubleProperty;
 
 public class BMI {
 
-    DoubleProperty weight;
-    DoubleProperty height;
-    DoubleProperty bmi;
+    private final DoubleProperty weight = new SimpleDoubleProperty();
+    private final DoubleProperty height = new SimpleDoubleProperty();
+    private double bmi;
 
     public BMI() {
     }
@@ -36,28 +37,24 @@ public class BMI {
     }
 
     public double getBmi() {
-        return bmi.get();
-    }
-
-    public DoubleProperty bmiProperty() {
         return bmi;
     }
 
     public void setBmi(double bmi) {
-        this.bmi.set(bmi);
+        this.bmi = bmi;
     }
 
     public void calculate(){
         setBmi(getWeight() / Math.pow((getHeight() / 100), 2));
     }
 
-    public BMIClass categorize(double bmi){
-        if(bmi > 0 && bmi < 18.5) return BMIClass.UNTERGEWICHT;
-        if(bmi >= 18.5 && bmi < 25) return BMIClass.NORMALGEWICHT;
-        if(bmi >= 25 && bmi < 30) return BMIClass.UEBERGEWICHT;
-        if(bmi >= 30 && bmi < 35) return BMIClass.ADIPOSITAS1;
-        if(bmi >= 35 && bmi < 40) return BMIClass.ADIPOSITAS2;
-        if(bmi >= 40) return BMIClass.ADIPOSITAS3;
+    public BMIClass categorize(){
+        if(getBmi() > 0 && getBmi() < 18.5) return BMIClass.UNTERGEWICHT;
+        if(getBmi() >= 18.5 && getBmi() < 25) return BMIClass.NORMALGEWICHT;
+        if(getBmi() >= 25 && getBmi() < 30) return BMIClass.UEBERGEWICHT;
+        if(getBmi() >= 30 && getBmi() < 35) return BMIClass.ADIPOSITAS1;
+        if(getBmi() >= 35 && getBmi() < 40) return BMIClass.ADIPOSITAS2;
+        if(getBmi() >= 40) return BMIClass.ADIPOSITAS3;
         throw new IllegalArgumentException("Das Gewicht oder die Größe dürfen nicht kleiner als 1 sein!");
     }
 }
